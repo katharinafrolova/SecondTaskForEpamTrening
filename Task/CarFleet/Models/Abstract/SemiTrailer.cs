@@ -6,38 +6,105 @@ namespace Task.CarFleet.Models
 {
     public abstract class SemiTrailer: Car
     {
-        public double LoadCapacity { get; set; }
-        public double LoadedQuantity { get; set; }
+        /// <summary>
+        ///  Auto property that describes the maximum size of goods allowed in semi-trailers
+        /// </summary>
+        public double MaxSize { get; set; }
 
-        public SemiTrailer(double amount, string name) : base(name, true)
+        /// <summary>
+        ///  Auto property that describes the maximum weight of goods allowed in semi-trailers
+        /// </summary>
+        public double MaxWeight { get; set; }
+
+        /// <summary>
+        ///  Auto property that describes the size of goods occupied in semi-trailers
+        /// </summary>
+        public double LoadedSize { get; set; }
+
+        /// <summary>
+        ///  Auto property that describes the size of goods occupied in semi-trailers
+        /// </summary>
+        public double LoadedWeight { get; set; }
+
+        public SemiTrailer(double maxWeight, double addedWeight, double maxSize, double addedSize, string name) : base(name)
         {
-            if (amount > FreePlace())
+            MaxSize = maxSize;
+            MaxWeight = maxWeight;
+            LoadedSize = 0;
+            LoadedWeight = 0;
+            if (addedSize > FreePlaceOfSize())
             {
-                throw new ArgumentException("The weight exceeds the load capacity");
+                throw new ArgumentException("The size exceeds the load size");
             }
-            LoadedQuantity = LoadedQuantity + amount;
-        }
-        public SemiTrailer(double amount, string name, bool flag) : base(name, true)
-        {
-            if (amount > LoadedQuantity)
+            if (addedWeight > FreePlaceOfWeight())
             {
-                throw new ArgumentException("Еhe number of unloaded products exceeds the existing number");
+                throw new ArgumentException("The weight exceeds the load weight");
             }
-            LoadedQuantity = LoadedQuantity - amount;
+            LoadedSize = addedSize;
+            LoadedWeight = addedWeight;
         }
 
-        public SemiTrailer(double loadCapacity, double amount, string name) : base(name)
+        //public SemiTrailer(double weight, double addedSize, string name) : base(name, true)
+        //{
+        //    if (addedSize > FreePlaceOfSize())
+        //    {
+        //        throw new ArgumentException("The size exceeds the load size");
+        //    }
+        //    if(weight >FreePlaceOfWeight())
+        //    {
+        //        throw new ArgumentException("The weight exceeds the load weight");
+        //    }
+        //    LoadedSize = LoadedSize + addedSize;
+        //}
+        //public SemiTrailer(double weight, double addedSize, string name, bool flag) : base(name, true)
+        //{
+        //    if (addedSize > LoadedSize)
+        //    {
+        //        throw new ArgumentException("Еhe number of unloaded products exceeds the existing number");
+        //    }
+        //    LoadedSize = LoadedSize - addedSize;
+        //}
+
+       
+        public double FreePlaceOfSize() => MaxSize - LoadedSize;
+
+        public double FreePlaceOfWeight() => MaxWeight - LoadedWeight;
+
+        public bool LoadingOfSemiTrailers(double loadingOfSize, double loadingOfWeight)
         {
-            LoadCapacity = loadCapacity;
-            LoadedQuantity = 0;
-            if (amount > FreePlace())
+            bool result = true;
+            if (loadingOfSize > FreePlaceOfSize())
             {
-                throw new ArgumentException("The weight exceeds the load capacity");
+                result = false;
+                throw new ArgumentException("The size exceeds the load size");
             }
-            LoadedQuantity = amount;
+            if (loadingOfWeight > FreePlaceOfWeight())
+            {
+                result = false;
+                throw new ArgumentException("The weight exceeds the load weight");
+            }
+            LoadedSize = LoadedSize + loadingOfSize;
+            LoadedWeight = LoadedWeight + loadingOfWeight;
+            return result;
         }
 
-        public double FreePlace() => LoadCapacity - LoadedQuantity;
+        public bool UnloadingOfSemiTrailers(double uploadingOfSize, double uploadingOfWeight)
+        {
+            bool result = true;
+            if (uploadingOfSize > LoadedSize)
+            {
+                result = false;
+                throw new ArgumentException("Еhe size of unloaded products exceeds the existing size");
+            }
+            if (uploadingOfWeight > LoadedWeight)
+            {
+                result = false;
+                throw new ArgumentException("Еhe weight of unloaded products exceeds the existing weight");
+            }
+            LoadedSize = LoadedSize - uploadingOfSize;
+            LoadedWeight = LoadedWeight - uploadingOfWeight;
+            return result;
+        }
 
     }
 }

@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CarFleet\Interfaces\" />
     <Folder Include="CarFleet\Models\TruckTractors\" />
   </ItemGroup>
 

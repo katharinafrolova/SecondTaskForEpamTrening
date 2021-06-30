@@ -4,15 +4,11 @@ namespace Task
 {
     public abstract class Car
     {
-        public string Name { get; set; }
+        public string NameOfCar { get; set; }
 
         public Car(string name)
         {
-            Name = name;
-        }
-
-        public Car(string name, bool flag)
-        {
+            NameOfCar = name;
         }
 
     }
