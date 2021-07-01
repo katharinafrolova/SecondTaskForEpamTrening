@@ -6,5 +6,6 @@ namespace Task.CarFleetLogistics.Repositories
 {
     public class LogisticsRepository
     {
+
     }
 }
