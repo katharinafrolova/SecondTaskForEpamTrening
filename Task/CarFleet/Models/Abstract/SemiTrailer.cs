@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Task.CarFleet.Models
 {
-    public abstract class SemiTrailer: Car
+    public abstract class SemiTrailer
     {
         /// <summary>
         ///  Auto property that describes the maximum size of goods allowed in semi-trailers
@@ -26,7 +26,7 @@ namespace Task.CarFleet.Models
         /// </summary>
         public double LoadedWeight { get; set; }
 
-        public SemiTrailer(double maxWeight, double addedWeight, double maxSize, double addedSize, string name) : base(name)
+        public SemiTrailer(double maxWeight, double addedWeight, double maxSize, double addedSize)
         {
             MaxSize = maxSize;
             MaxWeight = maxWeight;
@@ -44,28 +44,6 @@ namespace Task.CarFleet.Models
             LoadedWeight = addedWeight;
         }
 
-        //public SemiTrailer(double weight, double addedSize, string name) : base(name, true)
-        //{
-        //    if (addedSize > FreePlaceOfSize())
-        //    {
-        //        throw new ArgumentException("The size exceeds the load size");
-        //    }
-        //    if(weight >FreePlaceOfWeight())
-        //    {
-        //        throw new ArgumentException("The weight exceeds the load weight");
-        //    }
-        //    LoadedSize = LoadedSize + addedSize;
-        //}
-        //public SemiTrailer(double weight, double addedSize, string name, bool flag) : base(name, true)
-        //{
-        //    if (addedSize > LoadedSize)
-        //    {
-        //        throw new ArgumentException("Еhe number of unloaded products exceeds the existing number");
-        //    }
-        //    LoadedSize = LoadedSize - addedSize;
-        //}
-
-       
         public double FreePlaceOfSize() => MaxSize - LoadedSize;
 
         public double FreePlaceOfWeight() => MaxWeight - LoadedWeight;
@@ -105,6 +83,23 @@ namespace Task.CarFleet.Models
             LoadedWeight = LoadedWeight - uploadingOfWeight;
             return result;
         }
+
+
+        public override string ToString() => $"{base.ToString()} Max weight: {MaxWeight} ; Max size {MaxSize} ; Loaded size {LoadedSize} ;  Loaded weight {LoadedWeight} ";
+        
+        public override int GetHashCode()
+        {
+            int hashCode = 1909959431;
+            hashCode = hashCode * -1521134295 + base.GetHashCode();
+            hashCode = hashCode * -1521134295 + MaxWeight.GetHashCode();
+            hashCode = hashCode * -1521134295 + MaxSize.GetHashCode();
+            hashCode = hashCode * -1521134295 + LoadedSize.GetHashCode();
+            hashCode = hashCode * -1521134295 + LoadedWeight.GetHashCode();
+            return hashCode;
+        }
+
+        public override bool Equals(object obj) => obj is SemiTrailer semiTrailer && base.Equals(obj) && MaxWeight == semiTrailer.MaxWeight && MaxSize == semiTrailer.MaxSize && LoadedSize == semiTrailer.LoadedSize && LoadedWeight == semiTrailer.LoadedWeight;
+
 
     }
 }

@@ -8,7 +8,7 @@ namespace Task.CarFleet.Models.SemiTrailers
     {
         public string TypeOfLiquid { get; set; }
         public string NameOfLiquid { get; set; }
-        public TankTrucks(string nameOfCar, double maxWeight, double addedWeight, double maxSize, double addedSize, string type, string name) : base(maxWeight, addedWeight, maxSize, addedSize, nameOfCar)
+        public TankTrucks( double maxWeight, double addedWeight, double maxSize, double addedSize, string type, string name) : base(maxWeight, addedWeight, maxSize, addedSize)
         {
             TypeOfLiquid = type;
             NameOfLiquid = name;
@@ -31,9 +31,21 @@ namespace Task.CarFleet.Models.SemiTrailers
                 result = false;
             return result;
         }
-        
 
-       
+
+        public override string ToString() => $"{base.ToString()} Type of liquid: {TypeOfLiquid} ; Name of liquid {NameOfLiquid} ;";
+
+        public override int GetHashCode()
+        {
+            int hashCode = 1909959431;
+            hashCode = hashCode * -1521134295 + base.GetHashCode();
+            hashCode = hashCode * -1521134295 + TypeOfLiquid.GetHashCode();
+            hashCode = hashCode * -1521134295 + NameOfLiquid.GetHashCode();
+            return hashCode;
+        }
+
+        public override bool Equals(object obj) => obj is TankTrucks tankTrucks && base.Equals(obj) && TypeOfLiquid == tankTrucks.TypeOfLiquid && NameOfLiquid == tankTrucks.NameOfLiquid;
+
 
     }
 }

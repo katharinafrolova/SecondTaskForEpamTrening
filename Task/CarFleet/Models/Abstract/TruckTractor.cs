@@ -6,6 +6,8 @@ namespace Task.CarFleet.Models
 {
     public class TruckTractor
     {
+        public double MaxSize { get; set; }
+        
 
     }
 }

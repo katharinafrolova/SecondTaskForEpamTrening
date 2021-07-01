@@ -9,7 +9,7 @@ namespace Task.CarFleet.Models.SemiTrailers
         public double LeftBorderOfTheConditionsOfCarriage { get; set; }
         public double RightBorderOfTheConditionsOfCarriage { get; set; }
 
-        public RefrigeratedTrucks(string nameOfCar, double maxWeight, double addedWeight, double maxSize, double addedSize, double leftBorderOfTemperature, double rightBorderOfTemperature) : base(maxWeight, addedWeight, maxSize, addedSize, nameOfCar)
+        public RefrigeratedTrucks( double maxWeight, double addedWeight, double maxSize, double addedSize, double leftBorderOfTemperature, double rightBorderOfTemperature) : base(maxWeight, addedWeight, maxSize, addedSize)
         {
             LeftBorderOfTheConditionsOfCarriage = leftBorderOfTemperature;
             RightBorderOfTheConditionsOfCarriage = rightBorderOfTemperature;
@@ -27,6 +27,20 @@ namespace Task.CarFleet.Models.SemiTrailers
                 result = false;
             return result;
         }
+
+        public override string ToString() => $"{base.ToString()} Left border of the conditions of carriage: {LeftBorderOfTheConditionsOfCarriage} ; Right border of the conditions of carriage {RightBorderOfTheConditionsOfCarriage} ;";
+
+        public override int GetHashCode()
+        {
+            int hashCode = 1909959431;
+            hashCode = hashCode * -1521134295 + base.GetHashCode();
+            hashCode = hashCode * -1521134295 + LeftBorderOfTheConditionsOfCarriage.GetHashCode();
+            hashCode = hashCode * -1521134295 + RightBorderOfTheConditionsOfCarriage.GetHashCode();
+            return hashCode;
+        }
+
+        public override bool Equals(object obj) => obj is RefrigeratedTrucks refrigeratedTrucks && base.Equals(obj) && LeftBorderOfTheConditionsOfCarriage == refrigeratedTrucks.LeftBorderOfTheConditionsOfCarriage && RightBorderOfTheConditionsOfCarriage == refrigeratedTrucks.RightBorderOfTheConditionsOfCarriage;
+
 
     }
 }
